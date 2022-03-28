@@ -12,17 +12,7 @@
               <button v-if="ownership" @click="handleDelete">Delete Projectlist</button>
             </div>
       </div>
-      <!-- <div class="error" v-if="error">{{ error }}</div>
-        <div v-if="playlist" class="playlist-details">
-            <div class="playlist-info">
-            <div class="cover">
-                <img :src="playlist.coverUrl">
-            </div>
-            <h2>{{ playlist.title }}</h2>
-            <p class="username">Created by {{ playlist.userName }}</p>
-            <p class="description">{{ playlist.description }}</p>
-            <button v-if="ownership" @click="handleDelete">Delete Playlist</button>
-            </div>
+      <!-- 
             <div class="song-list">
             <div v-if="!playlist.songs.length">No songs have been added to this playlist yet.</div>
             <div v-for="song in playlist.songs" :key="song.id" class="single-song">
