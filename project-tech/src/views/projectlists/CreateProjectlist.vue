@@ -21,14 +21,14 @@ import useStorage from '@/composables/useStorage'
 import useCollection from '@/composables/useCollection'
 import getUser from '@/composables/getUser'
 import { timestamp } from '@/firebase/config'
-// import { useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 
 export default {
   setup() {
     const { filePath, url, uploadImage } = useStorage()
     const { error, addDoc } = useCollection('projectlists')
     const { user } = getUser()
-    // const router = useRouter()
+    const router = useRouter()
 
     const title = ref('')
     const description = ref('')
@@ -52,8 +52,7 @@ export default {
         })
         isPending.value = false
         if (!error.value) {
-          //router.push({ name: 'ProjectlistDetails', params: { id: res.id }})
-          console.log('done!')
+          router.push({ name: 'ProjectlistDetails', params: { id: res.id }})
         }
       }
     }

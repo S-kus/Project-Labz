@@ -1,7 +1,7 @@
 <template>
   <div>
       <div v-for="item in projectlists" :key="item.id">
-        <!-- <router-link :to="{ name: 'ProjectlistDetails', params: { id: item.id }}"> -->
+        <router-link :to="{ name: 'ProjectlistDetails', params: { id: item.id }}">
         <div class="single">
             <div class="thumbnail">
             <img :src="item.coverUrl">
@@ -14,7 +14,7 @@
             <p>{{ item.projects.length }} Projects</p>
             </div>
         </div>
-        <!-- </router-link> -->
+        </router-link>
       </div>
   </div>
 </template>
