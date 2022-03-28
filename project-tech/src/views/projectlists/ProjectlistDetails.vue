@@ -1,46 +1,81 @@
 <template>
   <div>
-      <p>{{id}}</p>
+      <div class="error" v-if="error">{{ error }}</div>
+      <div v-if="projectlist " class="playlist-details">
+            <div class="playlist-info">
+              <div class="cover">
+                  <img :src="projectlist.coverUrl">
+              </div>
+              <h2>{{ projectlist.title }}</h2>
+              <p class="username">Created by {{ projectlist.userName }}</p>
+              <p class="description">{{ projectlist.description }}</p>
+              <button v-if="ownership" @click="handleDelete">Delete Projectlist</button>
+            </div>
+      </div>
+      <!-- <div class="error" v-if="error">{{ error }}</div>
+        <div v-if="playlist" class="playlist-details">
+            <div class="playlist-info">
+            <div class="cover">
+                <img :src="playlist.coverUrl">
+            </div>
+            <h2>{{ playlist.title }}</h2>
+            <p class="username">Created by {{ playlist.userName }}</p>
+            <p class="description">{{ playlist.description }}</p>
+            <button v-if="ownership" @click="handleDelete">Delete Playlist</button>
+            </div>
+            <div class="song-list">
+            <div v-if="!playlist.songs.length">No songs have been added to this playlist yet.</div>
+            <div v-for="song in playlist.songs" :key="song.id" class="single-song">
+                <div class="details">
+                <h3>{{ song.title }}</h3>
+                <p>{{ song.artist }}</p>
+                </div>
+                <button v-if="ownership" @click="handleClick(song.id)">delete</button>
+            </div>
+            <AddSong :playlist="playlist" />
+            </div>
+            
+        </div> -->
   </div>
 </template>
 
 <script>
 // import AddSong from '@/components/AddSong.vue'
-// import useStorage from '@/composables/useStorage'
-// import useDocument from '@/composables/useDocument'
-// import getDocument from '@/composables/getDocument'
-// import getUser from '@/composables/getUser'
-// import { computed } from 'vue'
-// import { useRouter } from 'vue-router'
+import useStorage from '@/composables/useStorage'
+import useDocument from '@/composables/useDocument'
+import getDocument from '@/composables/getDocument'
+import getUser from '@/composables/getUser'
+import { computed } from 'vue'
+import { useRouter } from 'vue-router'
 
 export default {
   props: ['id'],
 //   components: { AddSong },
   setup(props) {
-    // const { error, document: playlist } = getDocument('playlists', props.id)
-    // const { user } = getUser()
-    // const { deleteDoc, updateDoc } = useDocument('playlists', props.id)
-    // const { deleteImage } = useStorage()
-    // const router = useRouter()
+    const { error, document: projectlist} = getDocument('projectlists', props.id)
+    const { user } = getUser()
+    const { deleteDoc} = useDocument('projectlists', props.id)
+    const { deleteImage } = useStorage()
+    const router = useRouter()
 
-    // const ownership = computed(() => {
-    //   return playlist.value 
-    //     && user.value 
-    //     && user.value.uid == playlist.value.userId
-    // })
+    const ownership = computed(() => {
+      return projectlist.value 
+        && user.value 
+        && user.value.uid == projectlist.value.userId
+    })
 
-    // const handleDelete = async () => {
-    //   await deleteDoc()
-    //   await deleteImage(playlist.value.filePath)
-    //   router.push({ name: 'Home' })
-    // }
+    const handleDelete = async () => {
+      await deleteDoc()
+      await deleteImage(projectlist.value.filePath)
+      router.push({ name: 'Home' })
+    }
 
     // const handleClick = async (id) => {
     //   const songs = playlist.value.songs.filter((song) => song.id != id)
     //   await updateDoc({ songs })
     // }
 
-    // return { error, playlist, ownership, handleDelete, handleClick }
+    return { error, projectlist, ownership, handleDelete}
   }
 }
 </script>
