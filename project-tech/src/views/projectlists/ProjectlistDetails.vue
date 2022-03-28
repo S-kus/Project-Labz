@@ -1,7 +1,7 @@
 <template>
   <div>
       <div class="error" v-if="error">{{ error }}</div>
-      <div v-if="projectlist " class="playlist-details">
+          <div v-if="projectlist " class="playlist-details">
             <div class="playlist-info">
               <div class="cover">
                   <img :src="projectlist.coverUrl">
@@ -11,26 +11,23 @@
               <p class="description">{{ projectlist.description }}</p>
               <button v-if="ownership" @click="handleDelete">Delete Projectlist</button>
             </div>
-      </div>
-      <!-- 
             <div class="song-list">
-            <div v-if="!playlist.songs.length">No songs have been added to this playlist yet.</div>
-            <div v-for="song in playlist.songs" :key="song.id" class="single-song">
-                <div class="details">
-                <h3>{{ song.title }}</h3>
-                <p>{{ song.artist }}</p>
-                </div>
-                <button v-if="ownership" @click="handleClick(song.id)">delete</button>
+              <div v-if="!projectlist.projects.length">No projects have been added to this projectlist yet.</div>
+              <div v-for="project in projectlist.projects" :key="project.id" class="single-song">
+                  <div class="details">
+                    <h3>{{ project.title }}</h3>
+                    <a :href="project.codelink" target="_blank">Codebase Link</a>
+                  </div>
+                  <button v-if="ownership" @click="handleClick(project.id)">Delete</button>
+              </div>
+              <AddProject v-if="ownership" :projectlist="projectlist" />
             </div>
-            <AddSong :playlist="playlist" />
-            </div>
-            
-        </div> -->
+          </div>
   </div>
 </template>
 
 <script>
-// import AddSong from '@/components/AddSong.vue'
+import AddProject from '@/components/AddProject.vue'
 import useStorage from '@/composables/useStorage'
 import useDocument from '@/composables/useDocument'
 import getDocument from '@/composables/getDocument'
@@ -40,11 +37,11 @@ import { useRouter } from 'vue-router'
 
 export default {
   props: ['id'],
-//   components: { AddSong },
+  components: { AddProject },
   setup(props) {
     const { error, document: projectlist} = getDocument('projectlists', props.id)
     const { user } = getUser()
-    const { deleteDoc} = useDocument('projectlists', props.id)
+    const { deleteDoc, updateDoc} = useDocument('projectlists', props.id)
     const { deleteImage } = useStorage()
     const router = useRouter()
 
@@ -60,12 +57,12 @@ export default {
       router.push({ name: 'Home' })
     }
 
-    // const handleClick = async (id) => {
-    //   const songs = playlist.value.songs.filter((song) => song.id != id)
-    //   await updateDoc({ songs })
-    // }
+    const handleClick = async (id) => {
+      const projects = projectlist.value.projects.filter((project) => project.id != id)
+      await updateDoc({ projects })
+    }
 
-    return { error, projectlist, ownership, handleDelete}
+    return { error, projectlist, ownership, handleDelete, handleClick}
   }
 }
 </script>
@@ -116,5 +113,11 @@ export default {
     align-items: center;
     border-bottom: 1px dashed var(--secondary);
     margin-bottom: 20px;
+  }
+  .details a{
+    text-decoration: underline;
+  }
+  .details a:hover{
+    color: #aaa
   }
 </style>

@@ -5,8 +5,8 @@
       <h1><router-link :to="{ name: 'Home' }">Project.Tech</router-link></h1>
       <div class="links">
         <div v-if="user">
-          <router-link :to="{ name: 'CreateProjectlist' }">Create Playlist</router-link>
-          <!-- <router-link :to="{ name: 'UserPlaylists' }">My Playlists</router-link> -->
+          <router-link :to="{ name: 'CreateProjectlist' }">Create Projectlist</router-link>
+          <router-link :to="{ name: 'UserProjectlists' }">My Projectlists</router-link>
           <span>Hi there, {{ user.displayName }}</span>
           <button @click="handleClick">Logout</button>
         </div>
