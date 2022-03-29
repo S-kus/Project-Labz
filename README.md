@@ -1,5 +1,7 @@
 # Project Labz
 
+A website providing, managing and sharing different types of projects and project ideas.
+
 ## Build Setup
 
 ```bash
