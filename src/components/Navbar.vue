@@ -2,7 +2,7 @@
   <div class="navbar">
     <nav>
       <img src="@/assets/logo.jpg" alt="logo"/>
-      <h1><router-link :to="{ name: 'Home' }">Project.Tech</router-link></h1>
+      <h1><router-link :to="{ name: 'Home' }">Project Labz</router-link></h1>
       <div class="links">
         <div v-if="user">
           <router-link :to="{ name: 'Home'}">Home</router-link>
